@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f5f1e8">
+  <meta name="description" content="Doughcast: prepara l'impasto in anticipo, con i tuoi dati locali.">
+  <title>Doughcast | Impasto per dopodomani</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div><p class="eyebrow">Doughcast <span class="local-dot" aria-hidden="true"></span> locale</p><h1 id="page-title">Registra una serata</h1></div>
+      <button class="icon-button" id="health-button" type="button" aria-label="Controlla stato locale" title="Stato locale"><span class="status-orb" aria-hidden="true"></span></button>
+    </header>
+    <main id="app-main" tabindex="-1">
+      <div class="notice-region" id="notice-region" aria-live="polite"></div>
+      <section class="view" id="view-onboarding" data-view="onboarding" aria-labelledby="onboarding-title">
+        <div class="welcome-panel"><div class="stamp" aria-hidden="true">01</div><p class="eyebrow">Il tuo ritmo, senza nuvola</p><h2 id="onboarding-title">L’impasto giusto<br><em>al momento giusto.</em></h2><p class="lede">Doughcast impara dalle tue serate. Registra un giorno alla volta: quando ci saranno abbastanza dati, ti dirà quante palline preparare per dopodomani.</p><div class="readiness-card" id="onboarding-readiness"></div><button class="primary-button" type="button" data-go="record">Comincia a registrare <span aria-hidden="true">↗</span></button><p class="privacy-note"><span aria-hidden="true">⌁</span> Audio e dati restano su questo computer.</p></div>
+      </section>
+      <section class="view" id="view-record" data-view="record" aria-labelledby="record-title" hidden>
+        <div class="section-intro"><p class="eyebrow">Diario della serata</p><h2 id="record-title">Com’è andata?</h2><p>Una nota vocale basta. Puoi anche inserire i numeri a mano.</p></div>
+        <div class="recorder-card" id="recorder-card"><div class="recorder-meta"><span id="recording-label">Premi per raccontare</span><span id="recording-time">00:00</span></div><button class="record-button" id="record-button" type="button" aria-label="Inizia registrazione" aria-pressed="false"><span class="record-button-ring"><span class="record-button-core" aria-hidden="true"></span></span></button><p class="recorder-help" id="recorder-help">“Stasera 74 pizze, ha piovuto, partita alle otto…”</p></div>
+        <div class="split-label"><span>oppure</span></div><button class="secondary-button manual-trigger" type="button" data-action="manual">Inserisci a mano <span aria-hidden="true">＋</span></button>
+        <div id="review-panel" class="review-panel" hidden><div class="panel-heading"><div><p class="eyebrow">Controlla prima di salvare</p><h3>La tua serata</h3></div><span class="edit-mark" aria-hidden="true">✎</span></div><div class="transcript-block" id="transcript-block" hidden><span>Trascrizione</span><p id="transcript-text"></p></div><div class="warning-stack" id="warning-stack" role="alert"></div><form id="record-form" class="record-form"><input type="hidden" name="source" value="manual"><label class="field field-date"><span>Data</span><input name="date" type="date" required></label><label class="field"><span>Pizze vendute</span><input name="pizzas_sold" type="number" min="0" inputmode="numeric" placeholder="es. 74"></label><label class="field"><span>Palline preparate</span><input name="dough_balls_prepared" type="number" min="0" inputmode="numeric" placeholder="es. 90"></label><label class="field"><span>Palline rimaste</span><input name="dough_balls_left" type="number" min="0" inputmode="numeric" placeholder="es. 12"></label><label class="field"><span>Meteo</span><select name="weather"><option value="">Non indicato</option><option value="clear">Sereno</option><option value="cloudy">Nuvoloso</option><option value="rain">Pioggia</option><option value="snow">Neve</option></select></label><label class="field"><span>Evento / nota</span><input name="events" type="text" placeholder="es. partita importante"></label><label class="check-field"><input name="sold_out" type="checkbox"><span>Abbiamo finito l’impasto</span></label><label class="field sold-out-time"><span>Ora esaurimento (facoltativa)</span><input name="sold_out_time" type="time"></label><label class="field full-field"><span>Appunti</span><textarea name="notes" rows="2" placeholder="Qualcosa da ricordare?"></textarea></label><div class="form-actions full-field"><button class="text-button" type="button" data-action="discard">Rifai</button><button class="primary-button" type="submit">Salva serata <span aria-hidden="true">↗</span></button></div></form></div>
+      </section>
+      <section class="view" id="view-forecast" data-view="forecast" aria-labelledby="forecast-title" hidden><div class="section-intro forecast-intro"><p class="eyebrow">Piano di domani</p><h2 id="forecast-title">Per dopodomani</h2><p id="forecast-date">Prepara oggi l’impasto.</p></div><div id="forecast-content" class="forecast-content"><div class="loading-state"><span class="spinner"></span> Cerco gli ultimi dati…</div></div></section>
+      <section class="view" id="view-history" data-view="history" aria-labelledby="history-title" hidden><div class="section-intro"><p class="eyebrow">Il tuo archivio</p><h2 id="history-title">Storico</h2><p>Le serate confermate, tutte in un posto.</p></div><div class="chart-card"><div class="chart-header"><div><h3>Andamento</h3><p><span class="legend-dot actual"></span> vendute <span class="legend-dot predicted"></span> previste</p></div><span class="chart-period">ultimi 30 giorni</span></div><div class="chart-wrap"><canvas id="history-chart" role="img" aria-label="Grafico delle pizze vendute e previste"></canvas><div id="chart-empty" class="chart-empty" hidden>Nessun dato ancora. La prima serata comincia qui.</div></div></div><div class="recent-heading"><h3>Serate recenti</h3><button class="text-button" type="button" data-go="record">+ Aggiungi</button></div><div id="recent-records" class="recent-records"><div class="loading-state"><span class="spinner"></span> Carico lo storico…</div></div></section>
+    </main>
+    <nav class="bottom-tabs" aria-label="Sezioni principali"><button class="tab-button" type="button" data-go="record"><span class="tab-icon" aria-hidden="true">◉</span><span>Registra</span></button><button class="tab-button" type="button" data-go="forecast"><span class="tab-icon" aria-hidden="true">↗</span><span>Domani</span></button><button class="tab-button" type="button" data-go="history"><span class="tab-icon" aria-hidden="true">▤</span><span>Storico</span></button></nav>
+  </div>
+  <script src="/static/app.js"></script>
+</body>
+</html>
