@@ -10,6 +10,7 @@ product feature code was changed by A5.
 
 | Area | Check | Result |
 | --- | --- | --- |
+| Setup | `make setup` | PASS: editable package installation completed in the configured Python 3.14 virtual environment. |
 | Test suite | `.venv/bin/python -m pytest -q` | PASS: 20 passed, 1 skipped. One deprecation warning from the installed FastAPI/Starlette TestClient stack. |
 | Extraction evaluation | `make eval-extraction` | PASS: 25 deterministic text-only cases; exact match 1.00; hallucination rate 0.00. This does not validate live Whisper or Ollama. |
 | Benchmark | `make benchmark` / direct module invocation | BLOCKED before evaluation while loading the Hugging Face dataset: Python 3.14 plus the installed `datasets` stack raises `TypeError: Pickler._batch_setitems() takes 2 positional arguments but 3 were given`. `reports/benchmark.json` correctly records blocked status. |
