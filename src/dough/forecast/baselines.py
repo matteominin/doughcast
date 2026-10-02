@@ -67,7 +67,14 @@ class LightGBMQuantileModel:
         self.history: pd.DataFrame | None = None
 
     def fit(self, history: pd.DataFrame) -> "LightGBMQuantileModel":
-        from lightgbm import LGBMRegressor
+        use_lgb = True
+        try:
+            from lightgbm import LGBMRegressor
+            # Test simple instantiation to ensure C libraries like libomp can load
+            _ = LGBMRegressor(verbosity=-1)
+        except (ImportError, OSError):
+            use_lgb = False
+            from sklearn.ensemble import HistGradientBoostingRegressor
 
         self.history = _normalise(history, self.target_column)
         features = build_features(self.history, horizon_days=self.horizon_days, target_column=self.target_column)
@@ -77,7 +84,10 @@ class LightGBMQuantileModel:
             raise ValueError("LightGBM needs at least 8 complete historical feature rows")
         X, y = train[self.feature_columns], train[self.target_column]
         for quantile in (0.1, 0.5, 0.9):
-            model = LGBMRegressor(objective="quantile", alpha=quantile, n_estimators=100, learning_rate=0.05, num_leaves=15, verbosity=-1, random_state=self.random_state)
+            if use_lgb:
+                model = LGBMRegressor(objective="quantile", alpha=quantile, n_estimators=100, learning_rate=0.05, num_leaves=15, verbosity=-1, random_state=self.random_state)
+            else:
+                model = HistGradientBoostingRegressor(loss="quantile", quantile=quantile, max_iter=100, learning_rate=0.05, max_leaf_nodes=15, random_state=self.random_state)
             model.fit(X, y)
             self.models[quantile] = model
         return self

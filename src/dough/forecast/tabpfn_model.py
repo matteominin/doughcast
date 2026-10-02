@@ -31,15 +31,18 @@ class TabPFNModel:
         from tabpfn import TabPFNRegressor
 
         kwargs = {"device": self.device, "random_state": self.random_state, "show_progress_bar": False}
-        if self.version in {"default", ""}:
-            return TabPFNRegressor(**kwargs)
-        from tabpfn.constants import ModelVersion
-
         try:
-            model_version = ModelVersion(self.version)
-        except ValueError as error:
-            raise ValueError(f"Unsupported TabPFN version {self.version!r}") from error
-        return TabPFNRegressor.create_default_for_version(model_version, **kwargs)
+            if self.version in {"default", ""}:
+                return TabPFNRegressor(**kwargs)
+            from tabpfn.constants import ModelVersion
+
+            try:
+                model_version = ModelVersion(self.version)
+            except ValueError as error:
+                raise ValueError(f"Unsupported TabPFN version {self.version!r}") from error
+            return TabPFNRegressor.create_default_for_version(model_version, **kwargs)
+        except Exception as error:
+            raise RuntimeError(f"TabPFN initialization failed (requires TABPFN_TOKEN or local license): {error}") from error
 
     def fit(self, history: pd.DataFrame) -> "TabPFNModel":
         self.history = history.copy()
@@ -48,8 +51,11 @@ class TabPFNModel:
         self.feature_columns = [column for column in train.columns if column not in {"date", self.target_column} and pd.api.types.is_numeric_dtype(train[column])]
         if len(train) < 2 or not self.feature_columns:
             raise ValueError("TabPFN needs at least two complete historical feature rows")
-        self.model = self._new_regressor()
-        self.model.fit(train[self.feature_columns], train[self.target_column])
+        try:
+            self.model = self._new_regressor()
+            self.model.fit(train[self.feature_columns], train[self.target_column])
+        except Exception as error:
+            raise RuntimeError(f"TabPFN fit failed: {error}") from error
         return self
 
     def predict(self, target_date: date | str) -> PredictionInterval:

@@ -83,10 +83,21 @@ def inspect_dataset(frame: pd.DataFrame, dataset_info: Any = None, report_path: 
 def load_public_dataset(*, cache_dir: str | Path | None = None, n_series: int = 3, report_path: str | Path = "reports/dataset_summary.md") -> pd.DataFrame:
     """Download/load, tidy, inspect, and select the public restaurant series."""
 
-    from datasets import load_dataset
-    kwargs = {"cache_dir": str(cache_dir)} if cache_dir is not None else {}
-    dataset = load_dataset(DATASET_NAME, DATASET_CONFIG, split="train", **kwargs)
-    frame = _series_rows(dataset)
+    dataset_info = None
+    try:
+        from datasets import load_dataset
+        kwargs = {"cache_dir": str(cache_dir)} if cache_dir is not None else {}
+        dataset = load_dataset(DATASET_NAME, DATASET_CONFIG, split="train", **kwargs)
+        dataset_info = getattr(dataset, "info", None)
+        frame = _series_rows(dataset)
+    except Exception:
+        # Fallback to direct parquet download via huggingface_hub for compatibility (e.g. Python 3.14 dill pickler bug)
+        from huggingface_hub import hf_hub_download
+        path = hf_hub_download(repo_id=DATASET_NAME, filename=f"{DATASET_CONFIG}/train-00000-of-00001.parquet", repo_type="dataset")
+        raw_df = pd.read_parquet(path)
+        items = raw_df.to_dict("records")
+        frame = _series_rows(items)
+
     selected = select_series(frame, n_series=n_series)
-    inspect_dataset(selected, dataset_info=getattr(dataset, "info", None), report_path=report_path)
+    inspect_dataset(selected, dataset_info=dataset_info, report_path=report_path)
     return selected

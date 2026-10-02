@@ -24,7 +24,7 @@ eval-extraction:
 	PYTHONPATH=src $(PYTHON) -m dough.voice.evaluate
 
 offline-check:
-	@echo "Offline check is reserved for the quality agent."
+	PYTHONPATH=src $(PYTHON) -m dough.offline_check
 
 import-private:
 	@echo "Private-data import is reserved for the data/API agents. FILE=$(FILE)"

@@ -132,3 +132,12 @@ def test_recalled_voice_is_returned_but_not_confirmed(tmp_path):
     assert response.status_code == 200
     assert all(item["source"] == "recalled" and item["confirmed"] is False for item in response.json()["extracted"])
     assert client.get("/api/records").json()["records"] == []
+
+
+def test_voice_rejects_invalid_extension_and_oversized_audio(tmp_path):
+    client = _client(tmp_path)
+    res_bad_ext = client.post("/api/voice", files={"audio": ("script.exe", b"fake audio", "application/octet-stream")})
+    assert res_bad_ext.status_code == 400
+
+    res_oversized = client.post("/api/voice", files={"audio": ("large.webm", b"0" * (26 * 1024 * 1024), "audio/webm")})
+    assert res_oversized.status_code == 413

@@ -191,12 +191,24 @@ def create_app(
         audio: UploadFile = File(...),
         mode: Literal["daily", "recalled"] = Query("daily"),
     ) -> VoiceResponse:
-        suffix = Path(audio.filename or "audio.webm").suffix or ".webm"
+        filename = audio.filename or "audio.webm"
+        suffix = Path(filename).suffix.lower() or ".webm"
+        allowed_extensions = {".webm", ".ogg", ".wav", ".m4a", ".mp3", ".flac", ".aac", ".opus", ".3gp"}
+        if suffix not in allowed_extensions:
+            raise HTTPException(status_code=400, detail=f"Formato file {suffix!r} non supportato. Usare file audio ({', '.join(sorted(allowed_extensions))})")
+
+        content_type = (audio.content_type or "").lower()
+        if content_type and not (content_type.startswith("audio/") or content_type.startswith("video/") or "octet-stream" in content_type):
+            raise HTTPException(status_code=400, detail="Il file caricato non sembra essere un file audio valido")
+
         temporary_path: str | None = None
         try:
             contents = await audio.read()
             if not contents:
                 raise HTTPException(status_code=400, detail="Il file audio è vuoto")
+            if len(contents) > 25 * 1024 * 1024:
+                raise HTTPException(status_code=413, detail="Dimensione file audio troppo grande (massimo 25MB)")
+
             with tempfile.NamedTemporaryFile(prefix="doughcast-", suffix=suffix, delete=False) as handle:
                 handle.write(contents)
                 temporary_path = handle.name

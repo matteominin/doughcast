@@ -1,6 +1,225 @@
 {
-  "status": "blocked",
-  "operation": "cold-start",
-  "reason": "TypeError: Pickler._batch_setitems() takes 2 positional arguments but 3 were given",
-  "dataset": "public proxy dataset (visitors, not pizzas)"
+  "status": "completed",
+  "dataset": "public proxy dataset (visitors, not pizzas)",
+  "history_lengths": [
+    7,
+    14,
+    21,
+    28,
+    42,
+    56,
+    90,
+    180
+  ],
+  "recommended_min_train_rows": 28,
+  "metrics_by_length": {
+    "7": {
+      "seasonal_naive": {
+        "mae": 11.133333333333333,
+        "wape": 0.5789688755431991,
+        "interval_coverage_80": null,
+        "count": 15
+      },
+      "same_weekday_mean": {
+        "mae": 11.133333333333333,
+        "wape": 0.5789688755431991,
+        "interval_coverage_80": null,
+        "count": 15
+      },
+      "lightgbm": {
+        "mae": null,
+        "wape": null,
+        "interval_coverage_80": null,
+        "count": 0
+      },
+      "tabpfn": {
+        "mae": null,
+        "wape": null,
+        "interval_coverage_80": null,
+        "count": 0
+      }
+    },
+    "14": {
+      "seasonal_naive": {
+        "mae": 11.133333333333333,
+        "wape": 0.5789688755431991,
+        "interval_coverage_80": null,
+        "count": 15
+      },
+      "same_weekday_mean": {
+        "mae": 10.666666666666666,
+        "wape": 0.6005440753150361,
+        "interval_coverage_80": null,
+        "count": 15
+      },
+      "lightgbm": {
+        "mae": null,
+        "wape": null,
+        "interval_coverage_80": null,
+        "count": 0
+      },
+      "tabpfn": {
+        "mae": null,
+        "wape": null,
+        "interval_coverage_80": null,
+        "count": 0
+      }
+    },
+    "21": {
+      "seasonal_naive": {
+        "mae": 11.133333333333333,
+        "wape": 0.5789688755431991,
+        "interval_coverage_80": null,
+        "count": 15
+      },
+      "same_weekday_mean": {
+        "mae": 9.333333651224772,
+        "wape": 0.522273576765626,
+        "interval_coverage_80": null,
+        "count": 15
+      },
+      "lightgbm": {
+        "mae": null,
+        "wape": null,
+        "interval_coverage_80": null,
+        "count": 0
+      },
+      "tabpfn": {
+        "mae": null,
+        "wape": null,
+        "interval_coverage_80": null,
+        "count": 0
+      }
+    },
+    "28": {
+      "seasonal_naive": {
+        "mae": 11.133333333333333,
+        "wape": 0.5789688755431991,
+        "interval_coverage_80": null,
+        "count": 15
+      },
+      "same_weekday_mean": {
+        "mae": 7.45,
+        "wape": 0.4085643299445964,
+        "interval_coverage_80": null,
+        "count": 15
+      },
+      "lightgbm": {
+        "mae": null,
+        "wape": null,
+        "interval_coverage_80": null,
+        "count": 0
+      },
+      "tabpfn": {
+        "mae": null,
+        "wape": null,
+        "interval_coverage_80": null,
+        "count": 0
+      }
+    },
+    "42": {
+      "seasonal_naive": {
+        "mae": 11.133333333333333,
+        "wape": 0.5789688755431991,
+        "interval_coverage_80": null,
+        "count": 15
+      },
+      "same_weekday_mean": {
+        "mae": 7.45,
+        "wape": 0.4085643299445964,
+        "interval_coverage_80": null,
+        "count": 15
+      },
+      "lightgbm": {
+        "mae": 17.333333333333332,
+        "wape": 1.0990081197356205,
+        "interval_coverage_80": 0.3333333333333333,
+        "count": 15
+      },
+      "tabpfn": {
+        "mae": 15.148096312617755,
+        "wape": 0.8791567419421499,
+        "interval_coverage_80": 0.4666666666666667,
+        "count": 15
+      }
+    },
+    "56": {
+      "seasonal_naive": {
+        "mae": 11.133333333333333,
+        "wape": 0.5789688755431991,
+        "interval_coverage_80": null,
+        "count": 15
+      },
+      "same_weekday_mean": {
+        "mae": 7.45,
+        "wape": 0.4085643299445964,
+        "interval_coverage_80": null,
+        "count": 15
+      },
+      "lightgbm": {
+        "mae": 16.466666666666665,
+        "wape": 1.0372035984487695,
+        "interval_coverage_80": 0.5333333333333333,
+        "count": 15
+      },
+      "tabpfn": {
+        "mae": 12.41470757601396,
+        "wape": 0.7566519772855138,
+        "interval_coverage_80": 0.7333333333333333,
+        "count": 15
+      }
+    },
+    "90": {
+      "seasonal_naive": {
+        "mae": 11.133333333333333,
+        "wape": 0.5789688755431991,
+        "interval_coverage_80": null,
+        "count": 15
+      },
+      "same_weekday_mean": {
+        "mae": 7.45,
+        "wape": 0.4085643299445964,
+        "interval_coverage_80": null,
+        "count": 15
+      },
+      "lightgbm": {
+        "mae": 11.23450745766324,
+        "wape": 0.6148093282432132,
+        "interval_coverage_80": 0.4666666666666667,
+        "count": 15
+      },
+      "tabpfn": {
+        "mae": 7.757068696791052,
+        "wape": 0.44107552809268935,
+        "interval_coverage_80": 0.8666666666666667,
+        "count": 15
+      }
+    },
+    "180": {
+      "seasonal_naive": {
+        "mae": 11.133333333333333,
+        "wape": 0.5789688755431991,
+        "interval_coverage_80": null,
+        "count": 15
+      },
+      "same_weekday_mean": {
+        "mae": 7.45,
+        "wape": 0.4085643299445964,
+        "interval_coverage_80": null,
+        "count": 15
+      },
+      "lightgbm": {
+        "mae": 9.215557788136094,
+        "wape": 0.5829978262576251,
+        "interval_coverage_80": 0.7333333333333333,
+        "count": 15
+      },
+      "tabpfn": {
+        "mae": 7.432256342041926,
+        "wape": 0.4353042457160944,
+        "interval_coverage_80": 0.8666666666666667,
+        "count": 15
+      }
+    }
+  }
 }
