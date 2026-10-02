@@ -13,7 +13,9 @@ flowchart LR
     Forecast --> Dough[Dough-ball recommendation]
 ```
 
-The current scaffold establishes `DailyRecord` and `Forecast` in `src/dough/schemas.py` and persistence in `src/dough/store.py`. Heavy model integrations, routes, and UI are reserved for later agents.
+`src/dough/voice/transcribe.py` loads faster-whisper lazily, forces Italian decoding, and supplies pizzeria vocabulary as an initial prompt. `src/dough/voice/extract.py` sends the transcript to a local Ollama client with a JSON schema, retries once, validates with `DailyRecord`, and returns Italian warnings. `mode="recalled"` uses an array schema and marks returned records as recalled. `src/dough/voice/evaluate.py` is deliberately model-free so `make eval-extraction` is deterministic and offline.
+
+The API layer owns temporary upload cleanup; voice functions accept a path but do not persist audio. The real model path requires locally installed faster-whisper weights, Ollama/Gemma, and ffmpeg for compressed containers.
 
 ## Contracts
 

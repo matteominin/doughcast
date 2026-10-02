@@ -1,0 +1,68 @@
+{
+  "mode": "deterministic_text_only",
+  "cases": 25,
+  "fields": {
+    "date": {
+      "correct": 25,
+      "total": 25,
+      "accuracy": 1.0,
+      "hallucinations": 0
+    },
+    "pizzas_sold": {
+      "correct": 25,
+      "total": 25,
+      "accuracy": 1.0,
+      "hallucinations": 0
+    },
+    "dough_balls_prepared": {
+      "correct": 25,
+      "total": 25,
+      "accuracy": 1.0,
+      "hallucinations": 0
+    },
+    "dough_balls_left": {
+      "correct": 25,
+      "total": 25,
+      "accuracy": 1.0,
+      "hallucinations": 0
+    },
+    "sold_out": {
+      "correct": 25,
+      "total": 25,
+      "accuracy": 1.0,
+      "hallucinations": 0
+    },
+    "sold_out_time": {
+      "correct": 25,
+      "total": 25,
+      "accuracy": 1.0,
+      "hallucinations": 0
+    },
+    "closed": {
+      "correct": 25,
+      "total": 25,
+      "accuracy": 1.0,
+      "hallucinations": 0
+    },
+    "weather": {
+      "correct": 25,
+      "total": 25,
+      "accuracy": 1.0,
+      "hallucinations": 0
+    },
+    "events": {
+      "correct": 25,
+      "total": 25,
+      "accuracy": 1.0,
+      "hallucinations": 0
+    },
+    "notes": {
+      "correct": 25,
+      "total": 25,
+      "accuracy": 1.0,
+      "hallucinations": 0
+    }
+  },
+  "exact_match": 1.0,
+  "hallucination_rate": 0.0
+}

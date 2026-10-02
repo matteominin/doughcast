@@ -35,6 +35,7 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
+markers = ["slow: requires downloaded local model weights or external runtime"]
 
 [tool.ruff]
 line-length = 100

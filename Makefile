@@ -15,13 +15,13 @@ test:
 	$(PYTHON) -m pytest
 
 benchmark:
-	@echo "Benchmark is reserved for the forecasting agent."
+	$(PYTHON) -m dough.forecast.evaluate benchmark
 
 cold-start:
-	@echo "Cold-start experiment is reserved for the forecasting agent."
+	$(PYTHON) -m dough.forecast.evaluate cold-start
 
 eval-extraction:
-	@echo "Extraction evaluation is reserved for the voice agent."
+	PYTHONPATH=src $(PYTHON) -m dough.voice.evaluate
 
 offline-check:
 	@echo "Offline check is reserved for the quality agent."
