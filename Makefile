@@ -9,7 +9,7 @@ setup:
 	$(PYTHON) -m pip install -e .
 
 demo:
-	@echo "Demo server is reserved for the API agent."
+	PYTHONPATH=src $(PYTHON) -m uvicorn dough.api:app --host 127.0.0.1 --port $${PORT:-8000}
 
 test:
 	$(PYTHON) -m pytest
