@@ -15,3 +15,23 @@ Ollama extraction retries exactly once, then returns an empty nullable record wi
 ## 2026-10-02: Store JSON lists as JSON text in SQLite
 
 `DailyRecord.events` is serialized as JSON rather than a delimiter-separated string so empty strings and future event text remain unambiguous. A normalized child table was rejected as unnecessary for the current one-record-per-day contract.
+
+## 2026-10-02: Keep live forecasting TabPFN-only
+
+Feature and baseline models share an interface for evaluation, but the product
+readiness gate must not silently substitute a baseline for TabPFN. This keeps
+the live claim aligned with the contract; benchmark baselines remain useful as
+comparators.
+
+## 2026-10-02: Shift all demand features by the forecast horizon
+
+For a target date `t`, demand-derived features use observations no newer than
+`t - HORIZON_DAYS`. This prevents a two-day-ahead forecast from reading sales
+that would not yet be known when dough is prepared.
+
+## 2026-10-02: Score quantiles before rounding dough quantities
+
+Pinball loss is computed from the continuous service-level estimate, while
+business waste and stock-out metrics use the separately rounded dough-ball
+quantity. Scoring the rounded quantity would mix an operational rounding rule
+into a probabilistic forecast metric and could hide small quantile errors.

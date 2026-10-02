@@ -4,12 +4,20 @@ Doughcast is a local-first assistant for a pizzeria. It will turn Italian voice 
 
 The voice slice is implemented locally: faster-whisper transcribes Italian audio and Ollama/Gemma returns schema-constrained JSON for owner confirmation. Uploaded audio is read from a temporary path by the API layer and is not persisted by the voice module.
 
+The forecasting slice includes a lazy Hugging Face restaurant-proxy loader,
+inspection report, horizon-shifted features, seasonal and weekday baselines,
+LightGBM quantiles, a local TabPFN quantile adapter, rolling-origin metrics,
+and dough-ball conversion. The live product remains TabPFN-only after the
+readiness gate; evaluation baselines are not production fallbacks.
+
 ## Setup
 
 ```sh
 make setup
 make test
 make eval-extraction
+make benchmark
+make cold-start
 ```
 
 Private data belongs in `data/private/`, which is ignored by git. The core path is intended to run locally after model downloads; no cloud service is part of the planned runtime path.
@@ -35,7 +43,15 @@ Do not describe the project as fully open source until these terms are verified.
 
 ## Limits and open questions
 
-The public benchmark will be a proxy dataset of restaurant visitors, not pizza sales. Real friend data, permissions, recipe percentages, and final model versions are still to be supplied by the human. No real audio is included. The real faster-whisper and Ollama runtime checks are blocked until model weights, Ollama, and ffmpeg are installed; the default recommended Whisper size is `small` for local CPU usability, with `medium` to be tried when hardware permits.
+The public benchmark is a proxy dataset of restaurant visitors, not pizza sales. Real friend data, permissions, recipe percentages, and final model versions are still to be supplied by the human. No real audio is included. The real faster-whisper and Ollama runtime checks are blocked until model weights, Ollama, and ffmpeg are installed; the default recommended Whisper size is `small` for local CPU usability, with `medium` to be tried when hardware permits.
+
+On the current Python 3.14 environment, the forecasting commands write blocked
+reports because the installed Hugging Face `datasets` stack fails while loading
+the public dataset with a `Pickler._batch_setitems` signature error. See
+[reports/FINDINGS.md](reports/FINDINGS.md) and the generated JSON reports.
+TabPFN 9.1.0 exposes the inspected local quantile API, but its gated checkpoint
+still requires license acceptance/token and model download; no TabPFN accuracy
+claim is made here.
 
 ## Commits after the deadline
 

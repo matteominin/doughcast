@@ -1,0 +1,6 @@
+{
+  "status": "blocked",
+  "operation": "benchmark",
+  "reason": "TypeError: Pickler._batch_setitems() takes 2 positional arguments but 3 were given",
+  "dataset": "public proxy dataset (visitors, not pizzas)"
+}
