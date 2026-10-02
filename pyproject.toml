@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "doughcast"
+version = "0.1.0"
+description = "Local-first demand notes and dough planning for a pizzeria."
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115,<1",
+    "uvicorn[standard]>=0.30,<1",
+    "pydantic>=2.9,<3",
+    "datasets>=3.0,<4",
+    "pandas>=2.2,<3",
+    "pyarrow>=22,<26",
+    "numpy>=2.0,<3",
+    "scikit-learn>=1.5,<2",
+    "lightgbm>=4.5,<5",
+    "tabpfn>=6,<10",
+    "faster-whisper>=1.1,<2",
+    "ollama>=0.4,<1",
+    "holidays>=0.60,<1",
+    "python-multipart>=0.0.12,<1",
+    "pytest>=8.3,<9",
+    "matplotlib>=3.9,<4",
+]
+
+[project.optional-dependencies]
+dev = ["ruff>=0.8,<1"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
